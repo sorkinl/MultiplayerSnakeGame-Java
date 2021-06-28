@@ -74,8 +74,8 @@ The received String is a JSON string sent from the client. It is parsed into val
 For the client a tutorial for a simple JavaScript snake game was used and then modified to use the web socket protocol and process some received data. I also modified a couple of functions to fit the needs of my project. Here is the list of changes from the original code:
 
 - `main()` method removed and moved to socket.onmessage listener.
-- drawSnake() draws two snakes instead of one
-- has\_game\_ended() returns a Boolean value, based on the response from the server
+- `drawSnake()` draws two snakes instead of one
+- `has\_game\_ended()` returns a Boolean value, based on the response from the server
 - random\_food() was removed completely and instead is ran on the server
 - gen\_food() was removed and instead ran on the server.
 - move\_snake() was altered to prevent snake from hitting the walls, but rather appear on the other end of the map.
