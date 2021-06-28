@@ -24,7 +24,7 @@ The goal of the project was to make a snake game that would allow for 2 people t
 
 In 2-person snake game there are 2 clients and 1 server. Clients send a frame with snake&#39;s position and score and in return server sends back the coordinates of the food and snake of the other client. My game runs on application layer of the TCP/IP protocol stack as it uses initial HTTP protocol to establish connection and convert it into WebSocket protocol. Before that connection is established however the server opens a TCP socket and establishes connection with the client over a three-way handshake. This handshake is happening to establish a transport layer between the processes on two hosts machines. Once that connection is established the client uses that connection to send initial HTTP request. The HTTP request is then converted to bi-directional WebSocket protocol connection. After the WebSocket connection is established, the client/server begin sending the JSON objects/strings to each other with snake position and score. The JSON objects look like in Figure 1. For client to server frame, the object is similar, but contains only one snake information from the client. Both client and server parse the strings to get data and then process the received data to send back another stringified JSON object.
 
-![](RackMultipart20210628-4-1f9uxi1_html_d0d14070eb5d9a26.png)
+![](Picture1.png)
 
 _Figure 1 JSON Frame_
 
