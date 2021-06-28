@@ -82,11 +82,11 @@ For the client a tutorial for a simple JavaScript snake game was used and then m
 
 Client is not complicated. It uses simple HTML \&lt;canvas\&gt; element to draw squares and snake map with 400x400 dimensions. Then it uses built in WebSocket class to establish connection with the server. It tracks the position of the snake and sends the message to the server every time it changes position. Once it receives the response from the server that the game has ended, the connection is closed.
 
-**Conclusion/Summary:**
+## Conclusion/Summary:
 
 The project was genuinely challenging to the point, and it was enjoyable researching original documentation to attempt to implement a WebSocket server. Of course, in a time frame given, the application is barebones and not even close to implementing all of the WebSocket&#39;s functionality. Server can be extended to support more users just by adding another thread, but there are some improvements that could be added. First, the logic that is handling snake movement on the client should be moved to server, and instead client should just send the &quot;direction&quot; of the snake to server. That way it will ensure that both clients receive the same data at the same time. Client can also be improved to make it friendlier to the user in general. But the most important would be changing the client to only send &quot;direction of the snake&quot;, rather than the entire snake and store the snake on the server instead. Overall, the project turned out well. I&#39;ve been learning a lot of web technologies on my own and was glad to learn how WebSocket structured and works behind the scenes.
 
-**References:**
+## References:
 
 Melnikov, A. &quot;rfc6455.&quot; Document Search and Retrieval Page, Internet Engineering Task Force, Dec. 2011, [datatracker.ietf.org/doc/html/rfc6455](datatracker.ietf.org/doc/html/rfc6455).
 
