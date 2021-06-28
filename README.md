@@ -12,9 +12,6 @@ java -jar MultiThreadWebSocket.jar
 ```
 Once the server is running, open the snakeclient.html on 2 different machines and start playing. The game will stop if you bump into each other or when one of the players reaches 200 points.
 
-Leonid Sorkin 4/22/2021
-
-2-person snake game.
 
 ## Introduction/Overview
 
@@ -38,19 +35,19 @@ _Handshake_
 
 The first thing that is done in serveSnake class is the handshake between client and the server. The client sends an HTTP GET request to the server and the server needs to generate a response that upgrades the connection to WebSocket. To understand how this happens I researched MDN Web Docs and the description of a WebSocket protocol provided by IETF in December 2011. I am citing the sources at the end of this document. According to MDN Docs this is what initial client HTTP request looks like:
 
-![](RackMultipart20210628-4-1f9uxi1_html_e0ca21fe6bafe7a.png)
+![](Picture2.png)
 
 _Figure 2 HTTP GET Request_
 
 It is standard, except for Sec-WebSocket-Key header. This value is necessary in the server response to the original GET request. The server response looks like this:
 
-![](RackMultipart20210628-4-1f9uxi1_html_b2e6c15a95f989d9.png)
+![](Picture3.png)
 
 _Figure 3 Server&#39;s response (Switching Protocols)_
 
 The server response is a special response that tells client that from now on the connection switches to using WebSocket protocol rather than HTTP. The Sec-WebSocket-Accept is constructed from Sec-WebSocket-Key header received on the client. The MDN Web Docs(source below) describes this process as follows: &quot;The Sec-WebSocket-Accept header is important in that the server must derive it from the [Sec-WebSocket-Key](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Sec-WebSocket-Key) that the client sent to it. To get it, concatenate the client&#39;s Sec-WebSocket-Key and the string &quot;258EAFA5-E914-47DA-95CA-C5AB0DC85B11&quot; together (it&#39;s a &quot;[magic string](https://en.wikipedia.org/wiki/Magic_string)&quot;), take the [SHA-1 hash](https://en.wikipedia.org/wiki/SHA-1) of the result, and return the [base64](https://en.wikipedia.org/wiki/Base64) encoding of that hash.&quot; My server handles this in handshake() method:
 
-![](RackMultipart20210628-4-1f9uxi1_html_bc4681171506bd89.png)
+![](Picture4.png)
 
 _Figure 4 WebSocket initial handshake_
 
@@ -60,13 +57,13 @@ _Connection_
 
 After the handshake is complete each thread in the server enters the while loop to constantly process incoming requests. But the biggest challenge is that in Web Socket Protocol the frames are encoded even if the data is sent as text. A single frame structure is given on the IETF website:
 
-![](RackMultipart20210628-4-1f9uxi1_html_8454ff653a0a4769.png)
+![](Picture5.png)
 
 _Figure 5 Frame structure_
 
 The first bit as far as I understood signifies whether the frame is final or whether it is divided into several frames(in my case it was always final). After that three 0 bits must follow. The remaining four bits of the first byte are the opcode, which signifies the type of message the frame will contain. In my application&#39;s case, frames were text frames which means my opcode was 0001. The resulting first byte of my application was always 129 or 10000001. The second byte consists of one bit defining whether payload is &quot;masked&quot;/encoded with a key following by 7 bits that signify the length/size of the payload. In case the size of payload is larger than 125 bytes, the value will have 126 and next 2 bytes are the integer less than 2^16. If the length is larger than 2^16 bytes, the length value will be 127 and next 8 bytes will signify the length of payload. After the length, 4 consecutive bytes are the key that masks the frame. The tricky part that gave me a headache is that client -\&gt; server always has the packet masked with a random key chosen upon connection. But in the response the frame isn&#39;t masked, and the client doesn&#39;t expect any key. For whatever reason MDN Web Docs forgot to include that into their documentation. So, in case of server-\&gt; client communication the masking-key will be 0 bits. After the key, all the remaining bytes are taken by Application data. Here is the code that I wrote for decoding the frame into the String:
 
-![](RackMultipart20210628-4-1f9uxi1_html_200e45b120df9f55.png)
+![](Picture6.png)
 
 _Figure 6 Decoding the frame_
 
