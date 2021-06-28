@@ -17,7 +17,7 @@ Once the server is running, open the snakeclient.html on 2 different machines an
 
 ## Introduction/Overview 
 
-The goal of the project was to make a snake game that would allow for 2 people to play together through a server written in Java and from 2 different host machines. Simple web page was modified and written in HTML/CSS/JSto make use of WebSocket. The server application is written in Java and communicates with web page using web socket.
+The goal of the project was to make a snake game that would allow for 2 people to play together through a server written in Java and from 2 different host machines. Simple web page was modified and written in HTML/CSS/JS to make use of WebSocket. The server application is written in Java and communicates with web page using web socket.
 
 ## System Architecture
 
@@ -31,11 +31,11 @@ _Figure 1 JSON Frame_
 
 The goal of this project was to attempt to connect web page to the server using web socket. Being familiar with web technologies, it was a good practice and deepened my understanding.
 
-Server is written in Java and consists of 4 classes: Snake, Food, MultiThreadWebSocket and serveSnake. Snake and Food classes have methods and fields related to the information of their x and y position. MultiThreadWebSocket class starts 2 threads that execute serveSnake class. The server code is run mostly on serveSnake.
+Server is written in Java and consists of 4 classes: `Snake`, `Food`, `MultiThreadWebSocket` and `serveSnake`. Snake and Food classes have methods and fields related to the information of their x and y position. `MultiThreadWebSocket` class starts 2 threads that execute serveSnake class. The server code is run mostly on serveSnake.
 
 _Handshake_
 
-The first thing that is done in serveSnake class is the handshake between client and the server. The client sends an HTTP GET request to the server and the server needs to generate a response that upgrades the connection to WebSocket. To understand how this happens I researched MDN Web Docs and the description of a WebSocket protocol provided by IETF in December 2011. The source are cited at the end of this document. The initial HTTP request is presented in figure 2.
+The first thing that is done in `serveSnake` class is the handshake between client and the server. The client sends an HTTP GET request to the server and the server needs to generate a response that upgrades the connection to WebSocket. To understand how this happens I researched MDN Web Docs and the description of a WebSocket protocol provided by IETF in December 2011. The source are cited at the end of this document. The initial HTTP request is presented in figure 2.
 
 ![](Picture2.png)
 
@@ -47,7 +47,7 @@ It is standard, except for Sec-WebSocket-Key header. This value is necessary in 
 
 _Figure 3 Server&#39;s response (Switching Protocols)_
 
-The server response is a special response that tells client that from now on the connection switches to using WebSocket protocol rather than HTTP. The Sec-WebSocket-Accept is constructed from Sec-WebSocket-Key header received on the client. The MDN Web Docs(source below) describes this process as follows: &quot;The Sec-WebSocket-Accept header is important in that the server must derive it from the [Sec-WebSocket-Key](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Sec-WebSocket-Key) that the client sent to it. To get it, concatenate the client&#39;s Sec-WebSocket-Key and the string &quot;258EAFA5-E914-47DA-95CA-C5AB0DC85B11&quot; together (it&#39;s a &quot;[magic string](https://en.wikipedia.org/wiki/Magic_string)&quot;), take the [SHA-1 hash](https://en.wikipedia.org/wiki/SHA-1) of the result, and return the [base64](https://en.wikipedia.org/wiki/Base64) encoding of that hash.&quot; The server handles this in handshake() method presented in Figure 4.
+The server response is a special response that tells client that from now on the connection switches to using WebSocket protocol rather than HTTP. The Sec-WebSocket-Accept is constructed from Sec-WebSocket-Key header received on the client. The MDN Web Docs(source below) describes this process as follows: &quot;The Sec-WebSocket-Accept header is important in that the server must derive it from the [Sec-WebSocket-Key](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Sec-WebSocket-Key) that the client sent to it. To get it, concatenate the client&#39;s Sec-WebSocket-Key and the string &quot;258EAFA5-E914-47DA-95CA-C5AB0DC85B11&quot; together (it&#39;s a &quot;[magic string](https://en.wikipedia.org/wiki/Magic_string)&quot;), take the [SHA-1 hash](https://en.wikipedia.org/wiki/SHA-1) of the result, and return the [base64](https://en.wikipedia.org/wiki/Base64) encoding of that hash.&quot; The server handles this in `handshake()` method presented in Figure 4.
 
 ![](Picture4.png)
 
