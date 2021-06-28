@@ -75,10 +75,10 @@ For the client a tutorial for a simple JavaScript snake game was used and then m
 
 - `main()` method removed and moved to socket.onmessage listener.
 - `drawSnake()` draws two snakes instead of one
-- `has\_game\_ended()` returns a Boolean value, based on the response from the server
-- random\_food() was removed completely and instead is ran on the server
-- gen\_food() was removed and instead ran on the server.
-- move\_snake() was altered to prevent snake from hitting the walls, but rather appear on the other end of the map.
+- `has_game_ended()` returns a Boolean value, based on the response from the server
+- `random_food()` was removed completely and instead is ran on the server
+- `gen_food()` was removed and instead ran on the server.
+- `move_snake()` was altered to prevent snake from hitting the walls, but rather appear on the other end of the map.
 
 Client is not complicated. It uses simple HTML \&lt;canvas\&gt; element to draw squares and snake map with 400x400 dimensions. Then it uses built in WebSocket class to establish connection with the server. It tracks the position of the snake and sends the message to the server every time it changes position. Once it receives the response from the server that the game has ended, the connection is closed.
 
