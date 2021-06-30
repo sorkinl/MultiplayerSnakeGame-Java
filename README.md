@@ -1,11 +1,11 @@
 # 2-person snake game
 2-person game with HTML/CSS/JavaScript client and Java WebSocket Server
 
-
+![](Animation1.gif)
 
 ## Usage
 
-Change the value of the IP variable in line 26 of the snakeclient.html, to the IP address of the host machine where you are running the server. After that run:
+Change the value of the IP variable in line 26 of the WebPage/snakeclient.html, to the IP address of the host machine where you are running the server. After that run:
 
 ```
 java -jar MultiThreadWebSocket.jar
