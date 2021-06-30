@@ -15,9 +15,9 @@ Once the server is running, open the snakeclient.html on 2 different machines an
 
 
 
-## Introduction/Overview 
+## Overview/Purpose
 
-The goal of the project was to make a snake game that would allow for 2 people to play together through a server written in Java and from 2 different host machines. Simple web page was modified and written in HTML/CSS/JS to make use of WebSocket. The server application is written in Java and communicates with web page using web socket.
+The goal of the project was to make a snake game that would allow for 2 people to play together through a server written in Java and from 2 different host machines. Simple web page was modified and written in HTML/CSS/JS to make use of WebSocket. The server application is written in Java and communicates with web page through the WebSocket protocol implemented from scratch using Java `ServerSocket` class for TCP connection. 
 
 ## System Architecture
 
